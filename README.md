@@ -111,3 +111,39 @@ pkg-config --cflags gtk4
 ```
 
 Se os comandos retornarem informações sem erro, o ambiente está configurado corretamente.
+
+---
+
+## Rodando a build
+
+### 1. Clonar o repositório
+
+No terminal, execute:
+
+```bash
+git clone https://github.com/lellyoliver/proposta-de-servicos-c.git
+```
+
+### 2. Acessar a pasta do projeto
+
+```bash
+cd proposta-de-servicos-c
+```
+
+### 3. Executar a build
+
+Execute o arquivo `build.bat` para compilar o projeto e copiar as dependências necessárias do GTK:
+
+```bash
+build.bat
+```
+
+### 4. Executar o aplicativo
+
+Após a build, execute:
+
+```bash
+app.exe
+```
+
+Isso irá iniciar o aplicativo com todas as dependências corretamente configuradas.
