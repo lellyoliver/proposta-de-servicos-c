@@ -147,3 +147,107 @@ app.exe
 ```
 
 Isso irá iniciar o aplicativo com todas as dependências corretamente configuradas.
+
+# MYSQL (C) + MariaDB/phpMyAdmin com Docker
+
+## Pré-requisitos
+
+- MSYS2 instalado
+- Docker Desktop em execução
+
+## Instalação do cliente MariaDB no MSYS2
+
+Abra o terminal:
+
+```bash
+MSYS2 MinGW64
+```
+
+Instale a biblioteca cliente MariaDB para C:
+
+```bash
+pacman -S mingw-w64-x86_64-libmariadbclient
+```
+
+Para validar a instalação, rode:
+
+```bash
+pacman -Ss mariadb
+```
+
+Deve aparecer algo semelhante a:
+
+```bash
+clangarm64/mingw-w64-clang-aarch64-libmariadbclient 3.4.8-1
+    MariaDB client libraries (mingw-w64)
+
+mingw64/mingw-w64-x86_64-libmariadbclient 3.4.8-1 [installed]
+    MariaDB client libraries (mingw-w64)
+
+ucrt64/mingw-w64-ucrt-x86_64-libmariadbclient 3.4.8-1
+    MariaDB client libraries (mingw-w64)
+
+clang64/mingw-w64-clang-x86_64-libmariadbclient 3.4.8-1
+    MariaDB client libraries (mingw-w64)
+```
+
+Se aparecer `[installed]`, a biblioteca está pronta para uso.
+
+---
+
+## Subindo o banco com Docker
+
+O projeto possui um arquivo:
+
+```bash
+docker-compose.yml
+```
+
+Para iniciar os containers:
+
+```bash
+docker compose up -d
+```
+
+Isso irá subir:
+
+- MariaDB
+- phpMyAdmin
+
+Para parar e remover os containers:
+
+```bash
+docker compose down
+```
+
+---
+
+## Executando a aplicação em C
+
+Com o Docker rodando e o banco ativo, execute o `build.bat` do projeto.
+
+Ao rodar a aplicação corretamente, o retorno esperado será:
+
+```bash
+Conectado!
+OK
+Pressione Enter para sair...
+```
+
+Isso indica que:
+
+- A aplicação em C conectou no MariaDB
+- O container está respondendo corretamente
+- O ambiente está configurado com sucesso
+
+---
+
+## Acesso ao phpMyAdmin (painel para consulta SQL)
+
+Após subir os containers, acesse no navegador:
+
+```bash
+http://localhost:8083/
+```
+
+Use as credenciais definidas no `docker-compose.yml`.
