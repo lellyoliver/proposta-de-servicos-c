@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+  db:
+    image: mariadb:10.11
+    container_name: mariadb
+    restart: unless-stopped
+
+    ports:
+      - "3306:3306"
+
+    volumes:
+      - ./mariadb:/var/lib/mysql
+      - ./certs:/etc/mysql/certs:ro
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: "admin"
+      MARIADB_ROOT_HOST: "%"
+
+    command: >
+      --bind-address=0.0.0.0
+      --ssl-ca=/etc/mysql/certs/ca.pem
+      --ssl-cert=/etc/mysql/certs/server-cert.pem
+      --ssl-key=/etc/mysql/certs/server-key.pem
+      --tls-version=TLSv1.2,TLSv1.3
+
+    mem_limit: 256m
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    restart: unless-stopped
+
+    depends_on:
+      - db
+
+    ports:
+      - "8083:80"
+
+    environment:
+      PMA_HOST: db
+      PMA_USER: admin
+      PMA_PASSWORD: "admin"
+
+    mem_limit: 64m   
