@@ -2,20 +2,17 @@
 setlocal
 
 :: ================================
-:: CONFIGURAÇÕES (EDITE AQUI)
+:: CONFIGURAÇÕES
 :: ================================
 
-:: Caminho do MSYS2
 set MSYS=C:\msys64
-
-:: Caminho do seu projeto
 set PROJ=C:\Users\Lenovo\Documents\Faculdade\proposta-de-servicos-c
 
-:: Caminho do código fonte (agora usa todos os .c)
-set SRC=app/main.c app/bd.c
+:: Todos os .c
+set SRC=src/*.c
 
-:: Nome do executável
-set OUT=app.exe
+:: Executável
+set OUT=bin/app.exe
 
 :: ================================
 :: BUILD
@@ -23,18 +20,21 @@ set OUT=app.exe
 
 echo Compilando...
 
-"%MSYS%\usr\bin\env.exe" MSYSTEM=MINGW64 "%MSYS%\usr\bin\bash.exe" -lc "cd $(cygpath '%PROJ%') && gcc %SRC% -o %OUT% $(pkg-config --cflags --libs gtk4) -lmysqlclient"
+"%MSYS%\usr\bin\env.exe" MSYSTEM=MINGW64 "%MSYS%\usr\bin\bash.exe" -lc "cd $(cygpath '%PROJ%') && mkdir -p bin && gcc %SRC% -Iinc -o %OUT% $(pkg-config --cflags --libs gtk4) -lmysqlclient"
 
 if errorlevel 1 (
+    echo.
     echo Erro na compilacao
     pause
     exit /b
 )
 
+echo.
 echo Copiando DLLs...
 
-xcopy "%MSYS%\mingw64\bin\*.dll" "%PROJ%\" /Y >nul
+xcopy "%MSYS%\mingw64\bin\*.dll" "%PROJ%\bin\" /Y >nul
 
 echo.
-echo Build concluido! %OUT% atualizado
+echo Build concluido!
+echo Executavel: %OUT%
 pause

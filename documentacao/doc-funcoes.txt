@@ -1,0 +1,41 @@
+## Organização de pastas e arquivos em C  
+### Arquivos `.h` e `.c`
+
+Os arquivos com extensão `.c` são responsáveis pela implementação do programa.  
+É neles que escrevemos as funções, regras de negócio e toda a lógica que será compilada.
+
+Já os arquivos com extensão `.h` são chamados de arquivos de cabeçalho ou interface.  
+Eles servem para declarar funções, variáveis e estruturas que poderão ser utilizadas em diferentes partes do sistema.  
+Dessa forma, permitem reutilização de código e melhor organização do projeto.
+
+### Resumo
+
+- `.c` → implementação (lógica e execução)  
+- `.h` → declaração (interface das funções e estruturas)
+
+Como vamos salvar os arquivos:
+
+projeto/
+├── bin/                // .dlls (GTK) e .exe --executaveis
+├── certs/              // certificado SSL para o banco
+├── documentacao/       // documentação organização de pastas e utilização de funções
+├── inc/                // arquivos .h (headers)
+├── src/                // arquivos .c (código fonte)
+├── lib/                // bibliotecas externas (opcional)
+├── docker-compose.yml  // container de banco de dados
+├── build.bat           // automação de build
+└── README.md           // documentação de instalação
+
+obs.: Toda vez que atualizar o código rode novamente a build.bat
+
+###Funções de reciclagem
+
+Criei Algumas funções para gente reutilizar com segurança, e não precisar ficar criando código a mais. Exemplo.:
+
+A função de Entrada:
+```bash
+> Clientes
+> Propostas
+> Serviços
+```
+O usuário vai poder selecionar e entrar em modo de edição para começar a editar o programa
