@@ -1,0 +1,2 @@
+cliente_id;servico_id;descricao;valor_unitario;status;qnt_dias;valor_total;data_inicio;data_final
+8;9;Problema na rede eletrica do chuveiro;380.00;em aberto;1;380.00;2026-01-01;2026-01-01

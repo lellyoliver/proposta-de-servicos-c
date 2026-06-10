@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <conio.h>
+#include <stdbool.h>
 #include <string.h>
 #include <ctype.h>
 #include <mysql/mysql.h>

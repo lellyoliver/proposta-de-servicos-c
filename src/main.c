@@ -1,9 +1,13 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <stdbool.h>
 #include <windows.h>
 #include <mysql/mysql.h>
 #include "bd.h"
 #include "clientes.h"
+#include "propostas.h"
+#include "servicos.h"
 #include "functions.h"
 
 int main()
@@ -20,13 +24,15 @@ int main()
 
     char *opcoes[] = {
         "Clientes",
-        "Propostas"};
+        "Propostas",
+        "Servicos",
+    };
 
     int opcao;
 
     do
     {
-        opcao = menu_principal(conn, "Menu Principal", opcoes, 2);
+        opcao = menu_principal(conn, "Menu Principal", opcoes, 3); //3 é a quantidsade de opções
 
         switch (opcao)
         {
@@ -39,7 +45,19 @@ int main()
             break;
 
         case 2:
-            // menu propostas depois
+            menu(conn, "Propostas", "Proposta",
+                 inserir_propostas, 
+                 listar_propostas,
+                 atualizar_propostas,
+                 deletar_propostas);
+            break;
+
+        case 3:
+            menu(conn, "Servicos", "Servico",
+                 inserir_servicos, 
+                 listar_servicos,
+                 atualizar_servicos,
+                 deletar_servicos);
             break;
 
         case 0:
@@ -52,7 +70,7 @@ int main()
             break;
         }
 
-    } while (opcao != 0); // 🔥 volta pro menu principal
+    } while (opcao != 0);
 
     mysql_close(conn);
     return 0;

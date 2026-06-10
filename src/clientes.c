@@ -56,7 +56,7 @@ int atualizar_clientes(MYSQL *conn)
         scanf(" %[^\n]", c.name);
 
         snprintf(query, sizeof(query),
-                 "UPDATE clientes SET nome = '%s' WHERE id = %d;",
+                 "UPDATE clientes SET nome = '%s' WHERE cliente_id = %d;",
                  c.name, id);
     }
     else if (opcao == 2)
@@ -65,7 +65,7 @@ int atualizar_clientes(MYSQL *conn)
         scanf(" %[^\n]", c.endereco);
 
         snprintf(query, sizeof(query),
-                 "UPDATE clientes SET endereco = '%s' WHERE id = %d;",
+                 "UPDATE clientes SET endereco = '%s' WHERE cliente_id = %d;",
                  c.endereco, id);
     }
     else if (opcao == 3)
@@ -74,7 +74,7 @@ int atualizar_clientes(MYSQL *conn)
         scanf(" %[^\n]", c.telefone);
 
         snprintf(query, sizeof(query),
-                 "UPDATE clientes SET telefone = '%s' WHERE id = %d;",
+                 "UPDATE clientes SET telefone = '%s' WHERE cliente_id = %d;",
                  c.telefone, id);
     }
     else if (opcao == 4)
@@ -89,7 +89,7 @@ int atualizar_clientes(MYSQL *conn)
         scanf(" %[^\n]", c.telefone);
 
         snprintf(query, sizeof(query),
-                 "UPDATE clientes SET nome = '%s', endereco = '%s', telefone = '%s' WHERE id = %d;",
+                 "UPDATE clientes SET nome = '%s', endereco = '%s', telefone = '%s' WHERE cliente_id = %d;",
                  c.name, c.endereco, c.telefone, id);
     }
     else
@@ -122,7 +122,7 @@ int deletar_clientes(MYSQL *conn)
 
     // Montar a query para deletar o cliente
     snprintf(query, sizeof(query),
-             "DELETE FROM clientes WHERE id = %d;", id);
+             "DELETE FROM clientes WHERE cliente_id = %d;", id);
 
     if (mysql_query(conn, query))
     {
@@ -137,23 +137,31 @@ int deletar_clientes(MYSQL *conn)
 
 int listar_clientes(MYSQL *conn, bool search_by_name)
 {
-    Cliente c;
     char query[512];
+    char busca[100];
 
     if (!search_by_name)
     {
         snprintf(query, sizeof(query),
-                 "SELECT id, nome, endereco, telefone FROM clientes;");
+                 "SELECT cliente_id, nome, endereco, telefone FROM clientes;");
     }
     else
     {
         printf("Nome: ");
-        scanf(" %[^\n]", c.name);
+        scanf(" %[^\n]", busca);
 
         snprintf(query, sizeof(query),
-                 "SELECT id, nome, endereco, telefone FROM clientes "
-                 "WHERE nome LIKE '%%%s%%';",
-                 c.name);
+            "SELECT cliente_id, nome, endereco, telefone "
+            "FROM clientes "
+            "WHERE nome LIKE '%%%s%%' "
+            "OR telefone LIKE '%%%s%%' "
+            "OR endereco LIKE '%%%s%%' "
+            "ORDER BY nome ASC "
+            "LIMIT 10;",
+            busca,
+            busca,
+            busca
+        );
     }
 
     if (mysql_query(conn, query))
